@@ -1,0 +1,15 @@
+<ng-container *ngIf="personalConfig != null">
+
+  <mat-toolbar color="secondary">
+
+    <button mat-raised-button (click)="storeConfig()">
+      <fa name="save"></fa>
+      Store Changes
+    </button>
+
+  </mat-toolbar>
+
+  <app-config-viewer [config]=personalConfig></app-config-viewer>
+
+</ng-container>
+

@@ -1,0 +1,116 @@
+<mat-tab-group>
+
+  <ng-container *ngFor="let group of config">
+
+    <mat-tab label="{{group.name}}">
+
+
+      <mat-card>
+        <mat-card-title>{{group.heading}}</mat-card-title>
+        <mat-card-subtitle>{{group.description}}</mat-card-subtitle>
+
+        <mat-card-content>
+
+          <mat-list role="list">
+
+            <ng-container *ngFor="let property of group.properties">
+
+              <mat-list-item role="listitem" class="listitemmargintop" style="margin-top:30px;">
+
+                <ng-container [ngSwitch]="property.type">
+
+                  <ng-container *ngSwitchCase="'TEXT'">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                      <mat-label>{{property.item.label}}</mat-label>
+                      <input matInput type="text" [(ngModel)]="property.item.value" [pattern]="property.pattern"
+                             #err="ngModel">
+                      <mat-error *ngIf="err.errors?.pattern">
+                        {{property.patternErrorMessage}}
+                      </mat-error>
+                    </mat-form-field>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'NUMBER'">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                      <mat-label>{{property.item.label}}</mat-label>
+                      <input matInput type="number" [(ngModel)]="property.item.value" [pattern]="property.pattern"
+                             #err="ngModel">
+                      <mat-error *ngIf="err.errors?.pattern">
+                        {{property.patternErrorMessage}}
+                      </mat-error>
+                    </mat-form-field>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'PASSWORD'">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                      <!-- This label causes the frontend to die while loading. Seems to cause endless cpu-usage. -->
+                      <!--mat-label>{{property.item.label}}</mat-label-->
+                      <input matInput type="password" [(ngModel)]="property.item.value"
+                             #err="ngModel">
+                      <mat-error *ngIf="err.errors?.pattern">
+                        {{property.patternErrorMessage}}
+                      </mat-error>
+                    </mat-form-field>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'DATE'">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                      <mat-label>{{property.item.label}}</mat-label>
+                      <input matInput type="date" [(ngModel)]="property.item.value"
+                             #err="ngModel">
+                      <mat-error *ngIf="err.errors?.pattern">
+                        {{property.patternErrorMessage}}
+                      </mat-error>
+                    </mat-form-field>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'TIME'">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                      <!-- This label causes the frontend to die while loading. Seems to cause endless cpu-usage. -->
+                      <!--mat-label>{{property.item.label}}</mat-label-->
+                      <input matInput type="time" [(ngModel)]="property.item.value"
+                             #err="ngModel">
+                      <mat-error *ngIf="err.errors?.pattern">
+                        {{property.patternErrorMessage}}
+                      </mat-error>
+                    </mat-form-field>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'CHECKBOX'">
+
+                    <mat-checkbox [(ngModel)]="property.item.value" [labelPosition]="'after'">
+                      {{property.item.label}}
+                    </mat-checkbox>
+
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'DROPDOWN'">
+
+                    <mat-form-field floatLabel="always" appearance="outline">
+                      <mat-label>{{property.dropdownLabel}}</mat-label>
+                      <mat-select [(value)]="property.selected">
+                        <ng-container *ngFor="let item of property.dropdownItems">
+                          <mat-option value="{{item.value}}">{{item.label}}</mat-option>
+                        </ng-container>
+                      </mat-select>
+                    </mat-form-field>
+
+                  </ng-container>
+
+                </ng-container>
+
+              </mat-list-item>
+
+            </ng-container>
+
+          </mat-list>
+
+        </mat-card-content>
+
+      </mat-card>
+
+    </mat-tab>
+
+  </ng-container>
+
+</mat-tab-group>
